@@ -1,0 +1,19 @@
+{
+  "name": "nodejwt",
+  "version": "1.0.0",
+  "description": "Exercise on creating a nodeJS based JWT authentication backend",
+  "main": "index.js",
+  "author": "Nuno Freire",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "dependencies": {
+    "bookshelf": "^1.0.1",
+    "chalk": "^2.4.2",
+    "knex": "^0.19.5",
+    "koa": "^2.10.0",
+    "nconf": "^0.10.0",
+    "sqlite3": "^4.1.0"
+  }
+}
