@@ -6,7 +6,7 @@
   "author": "Nuno Freire",
   "license": "MIT",
   "scripts": {
-    "start": "node ./index.js"
+    "start:dev": "node-dev index.js"
   },
   "dependencies": {
     "bookshelf": "^1.0.1",
@@ -15,5 +15,8 @@
     "koa": "^2.10.0",
     "nconf": "^0.10.0",
     "sqlite3": "^4.1.0"
+  },
+  "devDependencies": {
+    "node-dev": "^4.0.0"
   }
 }

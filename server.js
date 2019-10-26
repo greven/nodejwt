@@ -1,9 +1,7 @@
-const Koa = require('koa')
+const http = require('http')
 
-const app = new Koa()
+const app = require('./app')
 
-app.use(async ctx => {
-  ctx.body = 'Hello Server!'
-})
+const server = http.createServer(app.callback())
 
-module.exports = app
+module.exports = server
