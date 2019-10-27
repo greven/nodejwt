@@ -1,0 +1,6 @@
+{
+  "auth": {
+    "jwtSecret": "1!@35!_1pWMd!fr2nURrp!+82+77pcn!_$24_gRwr+!",
+    "saltRounds": 10
+  }
+}
