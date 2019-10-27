@@ -10,4 +10,4 @@ router.get('/', (ctx) => {
 
 router.use(users.routes())
 
-export default router
+export default router.routes()
