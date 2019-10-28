@@ -5,7 +5,7 @@ import UserRoutes from './UserRoutes'
 const router = new Router()
 
 // Root
-router.get('/', (ctx) => {
+router.get('/', ctx => {
   ctx.body = 'Hello World!'
 })
 

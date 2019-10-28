@@ -5,13 +5,13 @@ import {
   Unique,
   PrimaryGeneratedColumn,
   CreateDateColumn,
-  UpdateDateColumn
-} from "typeorm"
+  UpdateDateColumn,
+} from 'typeorm'
 import { Length, IsEmail, IsNotEmpty } from 'class-validator'
 import argon2 from 'argon2'
 
 @Entity()
-@Unique(["email"])
+@Unique(['email'])
 export class User {
   @PrimaryGeneratedColumn()
   id: number
@@ -41,7 +41,7 @@ export class User {
     this.password = await argon2.hash(this.password)
   }
 
-  async checkPassword(unencryptedPassword: string)  {
+  async checkPassword(unencryptedPassword: string) {
     return await argon2.verify(this.password, unencryptedPassword)
   }
 }

@@ -1,12 +1,7 @@
-import { Connection, createConnection } from "typeorm"
+import { Connection, createConnection } from 'typeorm'
 
 export class Database {
   private connection!: Connection
-  private options: any
-
-  constructor(options: any) {
-    this.options = options
-  }
 
   public async connect() {
     if (this.connection) {
@@ -14,8 +9,8 @@ export class Database {
       return this.connection
     }
 
-    this.connection = await createConnection(this.options)
-    return this.connection;
+    this.connection = await createConnection()
+    return this.connection
   }
 
   public async disconnect() {
@@ -24,6 +19,7 @@ export class Database {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public async executeSQL(sql: string, ...params: any[]) {
     return this.connection.createQueryRunner().query(sql, params)
   }
