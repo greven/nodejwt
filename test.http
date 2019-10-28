@@ -14,7 +14,7 @@ POST http://{{host}}/user
 content-type: application/json
 
 {
-  "email": "test122@mail.com",
+  "email": "test@mail.com",
   "password": "Welcome1982_",
   "role": "user"
 }
@@ -22,3 +22,13 @@ content-type: application/json
 ###
 
 DELETE http://{{host}}/user/1
+
+###
+
+POST http://{{host}}/auth/login
+content-type: application/json
+
+{
+  "email": "test@mail.com",
+  "password": "Welcome1982_"
+}
