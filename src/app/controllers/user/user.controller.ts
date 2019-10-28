@@ -23,7 +23,7 @@ export default class UserController {
 
     // Validate the received user data
     const errors = await validate(user)
-    if (errors) {
+    if (errors.length) {
       ctx.body = { errors }
       ctx.status = BAD_REQUEST
       return
