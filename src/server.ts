@@ -2,7 +2,7 @@ import http from 'http'
 import Koa from 'koa'
 import cors from '@koa/cors'
 import helmet from 'koa-helmet'
-// import bodyParser from 'body-parser'
+import bodyParser from 'koa-bodyparser'
 
 import routes from './app/routes'
 
@@ -11,6 +11,7 @@ const app = new Koa()
 // Middlewares
 app.use(cors())
 app.use(helmet())
+app.use(bodyParser())
 
 app.use(routes)
 

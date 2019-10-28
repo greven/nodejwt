@@ -1,4 +1,5 @@
 {
+  "name": "test",
   "type": "sqlite",
   "database": "../data/test.sqlite",
   "synchronize": true,

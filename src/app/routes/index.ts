@@ -1,15 +1,15 @@
 import Router from 'koa-router'
 
-import UserRoutes from './UserRoutes'
+import user from './user.routes'
 
 const router = new Router()
 
 // Root
 router.get('/', ctx => {
-  ctx.body = 'Hello World!'
+  ctx.body = 'Hello World'
 })
 
 // Users
-router.use('/user/', UserRoutes)
+router.use('/user', user)
 
 export default router.routes()
