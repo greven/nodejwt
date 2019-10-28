@@ -1,14 +1,24 @@
-@URL = http://localhost:3000
+@hostname = localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
 
-GET {{URL}}/user
+GET http://{{host}}/user
 
 ###
 
-POST {{URL}}/user
+GET http://{{host}}/user/1
+
+###
+
+POST http://{{host}}/user
 content-type: application/json
 
 {
-  "email": "test3@mail.com",
-  "password": "Welcome982_",
+  "email": "test122@mail.com",
+  "password": "Welcome1982_",
   "role": "user"
 }
+
+###
+
+DELETE http://{{host}}/user/1
