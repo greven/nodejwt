@@ -1,9 +1,10 @@
+import http from 'http'
 import Koa from 'koa'
 import cors from '@koa/cors'
 import helmet from 'koa-helmet'
 // import bodyParser from 'body-parser'
 
-import routes from './routes'
+import routes from './app/routes'
 
 const app = new Koa()
 
@@ -13,4 +14,7 @@ app.use(helmet())
 
 app.use(routes)
 
-export default app
+// Pass the Koa app into the http server so we can customize it...
+const server = http.createServer(app.callback())
+
+export default server

@@ -1,0 +1,6 @@
+{
+  "type": "sqlite",
+  "database": "../data/dev.sqlite",
+  "synchronize": true,
+  "logging": false
+}
