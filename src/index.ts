@@ -2,8 +2,9 @@ import chalk from 'chalk'
 
 import server from './server'
 import { Database } from './database'
+import config from './config'
 
-const PORT = process.env.PORT || 3000
+const PORT = config.get('server:port')
 
 const db = new Database()
 

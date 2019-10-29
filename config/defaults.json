@@ -1,8 +1,0 @@
-{
-  "server": {
-    "port": 4040
-  },
-  "auth": {
-    "jwtSecret": "1!@3$Df5!_1pW$Md_*n!_$24_gRwr+!"
-  }
-}

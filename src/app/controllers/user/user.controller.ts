@@ -30,16 +30,15 @@ export default class UserController {
   }
 
   static createUser = async (ctx: Koa.Context) => {
-    const { email, password, role } = ctx.request.body
+    const { email, password } = ctx.request.body
     const user = new User()
     user.email = email
     user.password = password
-    user.role = role
 
     // Validate the received user data
     const errors = await validate(user)
     if (errors.length) {
-      ctx.body = { errors }
+      ctx.body = { errors: errors.map(err => err.constraints) }
       ctx.status = BAD_REQUEST
       return
     }

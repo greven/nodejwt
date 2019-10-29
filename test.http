@@ -1,34 +1,41 @@
 @hostname = localhost
-@port = 3000
+@port = 4000
 @host = {{hostname}}:{{port}}
 
-GET http://{{host}}/user
-
-###
-
-GET http://{{host}}/user/1
-
-###
-
+# CREATE USER
 POST http://{{host}}/user
 content-type: application/json
 
 {
   "email": "test@mail.com",
-  "password": "Welcome1982_",
-  "role": "user"
+  "password": "Welcome1982+"
 }
 
 ###
 
-DELETE http://{{host}}/user/1
-
-###
-
+# LOGIN
 POST http://{{host}}/auth/login
 content-type: application/json
 
 {
   "email": "test@mail.com",
-  "password": "Welcome1982_"
+  "password": "Welcome1982+"
 }
+
+###
+
+# LIST USERS
+# @name users
+GET http://{{host}}/user
+
+@user_id = {{users.response.body.users[0].id}}
+
+###
+
+# GET USER BY ID
+GET http://{{host}}/user/{{user_id}}
+
+###
+
+# DELETE USER BY ID
+DELETE http://{{host}}/user/{{user_id}}

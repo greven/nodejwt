@@ -1,30 +1,45 @@
+import argon2 from 'argon2'
+import { IsEmail, Length } from 'class-validator'
 import {
-  Entity,
   Column,
+  CreateDateColumn,
+  Entity,
   Index,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import { Length, IsEmail, IsNotEmpty } from 'class-validator'
-import argon2 from 'argon2'
+
+export enum RoleType {
+  USER = 'user',
+  EDITOR = 'editor',
+  ADMIN = 'admin',
+  SUPERADMIN = 'superadmin',
+}
+
+export interface UserInterface {
+  id: string
+  email: string
+  password: string
+  role: string
+  createdAt: Date
+  updatedAt: Date
+}
 
 @Entity()
-export class User {
+export class User implements UserInterface {
   @PrimaryGeneratedColumn('uuid')
-  id: number
+  id: string
 
   @Index()
-  @Column('text', { unique: true })
+  @Column({ type: 'text', unique: true })
   @IsEmail()
   email: string
 
   @Column('text')
-  @Length(4, 100)
+  @Length(8, 100)
   password: string
 
-  @Column('text')
-  @IsNotEmpty()
+  @Column({ type: 'text', default: RoleType.USER })
   role: string
 
   @Column('date')

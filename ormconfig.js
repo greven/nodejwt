@@ -1,20 +1,14 @@
-let config
+import config from './src/config'
 
-try {
-  const path = process.cwd() + `/config/ormconfig.${process.env.NODE_ENV}.json`
-  config = require(path)
-} catch (err) {
-  const path = process.cwd() + '/config/ormconfig.json'
-  config = require(path)
-}
+const ormconfig = config.get('typeorm')
 
-config.entities = [process.cwd() + '/src/app/models/**/*.ts']
-config.migrations = [process.cwd() + '/src/database/migrations/**/*.ts']
-config.subscribers = [process.cwd() + '/src/database/subscribers/**/*.ts']
-config.cli = {
+ormconfig.entities = [process.cwd() + '/src/app/models/**/*.ts']
+ormconfig.migrations = [process.cwd() + '/src/database/migrations/**/*.ts']
+ormconfig.subscribers = [process.cwd() + '/src/database/subscribers/**/*.ts']
+ormconfig.cli = {
   entitiesDir: '/src/app/models',
   migrationsDir: '/src/database/migrations',
   subscribersDir: '/src/database/subscribers',
 }
 
-module.exports = config
+module.exports = ormconfig

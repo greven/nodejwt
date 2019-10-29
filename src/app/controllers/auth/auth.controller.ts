@@ -1,9 +1,9 @@
 import Koa from 'koa'
 import { getRepository } from 'typeorm'
-// import { validate } from 'class-validator'
 import { OK, BAD_REQUEST, UNAUTHORIZED } from 'http-status-codes'
 
 import { User } from '../../models/User'
+import generateToken from '../../../lib/generateJWT'
 
 export default class AuthController {
   static login = async (ctx: Koa.Context) => {
@@ -30,7 +30,9 @@ export default class AuthController {
       return
     }
 
+    const token = generateToken(user)
+
     ctx.status = OK
-    ctx.body = { user } // !Don't send this... send the JWT token
+    ctx.body = { token }
   }
 }
