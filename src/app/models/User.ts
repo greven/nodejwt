@@ -2,7 +2,6 @@ import {
   Entity,
   Column,
   Index,
-  Unique,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
@@ -11,29 +10,28 @@ import { Length, IsEmail, IsNotEmpty } from 'class-validator'
 import argon2 from 'argon2'
 
 @Entity()
-@Unique(['email'])
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number
 
-  @Column()
   @Index()
+  @Column('text', { unique: true })
   @IsEmail()
   email: string
 
-  @Column()
+  @Column('text')
   @Length(4, 100)
   password: string
 
-  @Column()
+  @Column('text')
   @IsNotEmpty()
   role: string
 
-  @Column()
+  @Column('date')
   @CreateDateColumn()
   createdAt: Date
 
-  @Column()
+  @Column('date')
   @UpdateDateColumn()
   updatedAt: Date
 

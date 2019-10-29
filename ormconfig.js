@@ -1,10 +1,10 @@
 let config
 
 try {
-  const path = process.cwd() + `/src/config/ormconfig.${process.env.NODE_ENV}.json`
+  const path = process.cwd() + `/config/ormconfig.${process.env.NODE_ENV}.json`
   config = require(path)
 } catch (err) {
-  const path = process.cwd() + '/src/config/ormconfig.json'
+  const path = process.cwd() + '/config/ormconfig.json'
   config = require(path)
 }
 
