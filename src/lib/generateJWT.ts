@@ -1,20 +1,35 @@
-import jwt from 'jsonwebtoken'
+import { randomBytes } from 'crypto'
+import { sign } from 'jsonwebtoken'
 
 import config from '../config'
 import { UserInterface } from '../app/models/User'
 
-const JWT_SECRET = config.get('auth:jwtSecret')
-const JTW_EXPIRES = config.get('auth:jwtExpires')
+const tokenSecret = config.get('auth:jwt:token:secret')
+const tokenLife = config.get('auth:jwt:token:life')
 
-const generateToken = ({ id, email, role }: UserInterface) =>
-  jwt.sign(
+const refreshTokenSecret = config.get('auth:jwt:refreshToken:secret')
+const refreshTokenLife = config.get('auth:jwt:refreshToken:life')
+
+export const createAccessToken = ({ email, role }: UserInterface) =>
+  sign(
     {
-      id,
       email,
       role,
     },
-    JWT_SECRET,
-    { expiresIn: JTW_EXPIRES }
+    tokenSecret,
+    { expiresIn: tokenLife }
   )
 
-export default generateToken
+export const createRefreshToken = () => {
+  const tokenId = randomBytes(128).toString('hex')
+  return {
+    tokenId,
+    refreshToken: sign(
+      {
+        tokenId,
+      },
+      refreshTokenSecret,
+      { expiresIn: refreshTokenLife }
+    ),
+  }
+}

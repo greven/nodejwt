@@ -1,23 +1,20 @@
-import chalk from 'chalk'
-
-import server from './server'
 import { Database } from './database'
-import config from './config'
-
-const PORT = config.get('server:port')
+import { Server } from './server'
 
 const db = new Database()
+const server = new Server()
 
-// Initilize DB and then start the server
-db.connect()
-  .then(async () => {
-    server.listen(PORT, () => {
-      console.log(chalk.cyanBright(`→ Server started on http://localhost:${PORT}`))
-    })
-  })
-  .catch(err => console.log(err))
+const init = async () => {
+  await db.connect()
+  server.start()
+}
 
 // Cleanup
+process.on('unhandledRejection', err => {
+  console.log(err)
+  process.exit(1)
+})
+
 process.on('SIGINT', () => {
   db.disconnect()
     .then(() => {
@@ -27,3 +24,5 @@ process.on('SIGINT', () => {
       process.exit(1)
     })
 })
+
+init()

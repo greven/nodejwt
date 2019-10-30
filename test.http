@@ -14,12 +14,28 @@ content-type: application/json
 ###
 
 # LOGIN
-POST http://{{host}}/auth/login
+# @name login
+POST http://{{host}}/auth/login?refresh=true
 content-type: application/json
 
 {
   "email": "test@mail.com",
   "password": "Welcome1982+"
+}
+
+@access_token = {{login.response.body.accessToken}}
+@refresh_token = {{login.response.body.refreshToken}}
+
+###
+
+# Refresh Token
+# @name refresh
+POST http://{{host}}/auth/token
+content-type: application/json
+
+{
+  "email": "test@mail.com",
+  "refreshToken": "{{refresh_token}}"
 }
 
 ###

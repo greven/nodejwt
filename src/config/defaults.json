@@ -4,8 +4,16 @@
     "port": 4000
   },
   "auth": {
-    "jwtSecret": "1!@3$D8zLO-T_O9sQy4Fni-3f5!_1pW_d-jffPhJXc!+qQsiBQ6LuQ$Md_*n!_$24_gRwr+!",
-    "jwtExpires": "5m"
+    "jwt": {
+      "token": {
+        "secret": "1!@3$D8zLO-T_OsQ3_Aabb12Y4Fni-3f5!_1pW_d-jffJXc!+qQsiBQ6LuQ$Md_*n!_$24_gRwr+!",
+        "life": "5m"
+      },
+      "refreshToken": {
+        "secret": "!35KLl!_xJUeSER+xo724F1-P_DfknAuu56_6pG91XtF0VS5PE+&3T2+9ii%L22Oo78J7mOVMkf!o",
+        "life": "25d"
+      }
+    }
   },
   "typeorm": {
     "name": "default",
@@ -13,5 +21,8 @@
     "database": "./data/dev.sqlite",
     "synchronize": true,
     "logging": false
+  },
+  "keyv": {
+    "uri": "sqlite://data/dev.sqlite"
   }
 }

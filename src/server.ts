@@ -1,21 +1,21 @@
 import http from 'http'
-import Koa from 'koa'
-import cors from '@koa/cors'
-import helmet from 'koa-helmet'
-import bodyParser from 'koa-bodyparser'
+import chalk from 'chalk'
 
-import routes from './app/routes'
+import config from './config'
+import app from './app'
 
-const app = new Koa()
+const PORT = config.get('server:port')
 
-// Middlewares
-app.use(cors())
-app.use(helmet())
-app.use(bodyParser())
+export class Server {
+  server: http.Server
 
-app.use(routes)
+  constructor() {
+    this.server = http.createServer(app.callback())
+  }
 
-// Pass the Koa app into the http server so we can customize it...
-const server = http.createServer(app.callback())
-
-export default server
+  start() {
+    this.server.listen(PORT, () => {
+      console.log(chalk.cyanBright(`→ Server started on http://localhost:${PORT}`))
+    })
+  }
+}
