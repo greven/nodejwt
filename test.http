@@ -24,7 +24,6 @@ content-type: application/json
 }
 
 @access_token = {{login.response.body.accessToken}}
-@refresh_token = {{login.response.body.refreshToken}}
 
 ###
 
@@ -34,8 +33,7 @@ POST http://{{host}}/auth/token
 content-type: application/json
 
 {
-  "email": "test@mail.com",
-  "refreshToken": "{{refresh_token}}"
+  "email": "test@mail.com"
 }
 
 ###

@@ -7,8 +7,12 @@ import logger from 'koa-logger'
 
 import tokenStore from './app/middleware/tokenStore'
 import routes from './app/routes'
+import config from './config'
 
 const app = new Koa()
+
+// Set the signed cookies keys
+app.keys = config.get('cookies:keys')
 
 // Middlewares
 app.use(logger())

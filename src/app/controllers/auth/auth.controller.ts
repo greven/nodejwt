@@ -5,6 +5,7 @@ import { verify } from 'jsonwebtoken'
 
 import { User, RoleType } from '../../models/User'
 import { createAccessToken, createRefreshToken } from '../../../lib/generateJWT'
+import { sendRefreshToken } from '../../../lib/sendRefreshToken'
 import config from '../../../config'
 
 interface AuthResponse {
@@ -12,10 +13,11 @@ interface AuthResponse {
   refreshToken?: string
 }
 
-interface Token {
+interface TokenPayload {
   tokenId: string
   iat: number
-  eat: number
+  exp: number
+  role?: string
 }
 
 // Verify/decode the received refreshToken and if valid extract the tokenId
@@ -23,7 +25,7 @@ const getRefreshTokenId = (ctx: Koa.Context, refreshToken: string) => {
   const refreshTokenSecret = config.get('auth:jwt:refreshToken:secret')
 
   try {
-    const { tokenId } = verify(refreshToken, refreshTokenSecret) as Token
+    const { tokenId } = verify(refreshToken, refreshTokenSecret) as TokenPayload
     return tokenId
   } catch (error) {
     ctx.status = UNAUTHORIZED
@@ -61,10 +63,11 @@ export default class AuthController {
     let response: AuthResponse = { accessToken }
 
     if (refresh) {
-      const { tokenId, refreshToken } = createRefreshToken()
-      // Store the refresh token in memory
+      const { tokenId, refreshToken } = createRefreshToken(user)
+      // Store the refresh token in the tokens store
       await ctx.tokens.set(tokenId, user.email)
-      response = { accessToken, refreshToken }
+      sendRefreshToken(ctx, refreshToken)
+      response = { accessToken }
     }
 
     ctx.status = OK
@@ -74,6 +77,7 @@ export default class AuthController {
   // Refresh the JWT Access Token if refreshToken is valid
   static refresh = async (ctx: Koa.Context) => {
     const { email } = ctx.request.body
+    const refreshTokenPayload = ctx.state.refreshToken
 
     const userRepository = getRepository(User)
     let user: User
@@ -85,14 +89,30 @@ export default class AuthController {
       return
     }
 
-    const accessToken = createAccessToken(user)
+    // Check if the refresh token version matches the current token version
+    if (user.tokenVersion !== refreshTokenPayload.tokenVersion) {
+      ctx.status = UNAUTHORIZED
+      return
+    }
+
+    // TODO: Refactor this as it is similar to what we do on login? Check above!
+
+    // Invalidate previous refresh token saved in the context and token store
+    ctx.state.refreshToken = null
+    ctx.tokens.delete(refreshTokenPayload.tokenId)
+    const { tokenId, refreshToken } = createRefreshToken(user)
+    // Store the refresh token in the tokens store
+    await ctx.tokens.set(tokenId, user.email)
+    // Set the refreshToken as a cookie and send the accessToken in the response
+    sendRefreshToken(ctx, refreshToken)
     ctx.status = OK
-    ctx.body = { accessToken }
+    ctx.body = { accessToken: createAccessToken(user) }
   }
 
   // Invalidate the the refreshToken if it exists and user has permissions
   static invalidate = async (ctx: Koa.Context) => {
-    const { role, refreshToken } = ctx.request.body
+    const { role, refreshToken } = ctx.request.body // ! This is wrong! How do we get the role securely?
+    // ! Also refreshToken comes from the cookie
     const tokenId = await getRefreshTokenId(ctx, refreshToken)
     const tokenVal = await ctx.tokens.get(tokenId)
 

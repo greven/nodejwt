@@ -10,10 +10,18 @@
         "life": "5m"
       },
       "refreshToken": {
-        "secret": "!35KLl!_xJUeSER+xo724F1-P_DfknAuu56_6pG91XtF0VS5PE+&3T2+9ii%L22Oo78J7mOVMkf!o",
+        "secret": "!35KLl!_xJUeSER+xo724F1-P_DfknAuu56_6%$tF0VS^$€PE+&3T2+9ii%L22Oo78J7mOVMkf!o",
         "life": "25d"
       }
     }
+  },
+  "cookies": {
+    "keys": [
+      "$P_Df_VS5PErKU1",
+      "D8zLO_!><hYwv54$1-",
+      "+&!)£1@1aAbf1F_",
+      "!5_£5HRT2+9ii%L22Oo7m"
+    ]
   },
   "typeorm": {
     "name": "default",

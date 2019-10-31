@@ -6,26 +6,32 @@ import config from '../../config'
 
 const refreshTokenSecret = config.get('auth:jwt:refreshToken:secret')
 
-interface Token {
+interface TokenPayload {
   tokenId: string
   iat: number
-  eat: number
+  exp: number
+  role?: string
 }
 
 export const validateRefreshToken = async (ctx: Context, next: Function) => {
-  const { email, refreshToken } = ctx.request.body
+  const refreshToken = ctx.cookies.get('jid')
+  const { email } = ctx.request.body
 
   // Check if request includes the required fields
-  if (!email || !refreshToken) {
+  if (!refreshToken || !email) {
     ctx.status = BAD_REQUEST
     return
   }
 
   try {
+    // Verify the refresh token and if valid save it in the context state
     const decodedToken = verify(refreshToken, refreshTokenSecret)
-    const { tokenId } = decodedToken as Token
-    const tokenVal = await ctx.tokens.get(tokenId)
-    if (tokenVal === email) await next()
+    const { tokenId } = decodedToken as TokenPayload
+    ctx.state.refreshToken = decodedToken
+    /* Check if the refreshToken is in the store tokens list
+    and if it matches the user email sent in the request */
+    const storeTokenEmail = await ctx.tokens.get(tokenId)
+    if (storeTokenEmail === email) await next()
   } catch (error) {
     ctx.status = UNAUTHORIZED
     return

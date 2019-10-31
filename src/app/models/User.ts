@@ -21,6 +21,7 @@ export interface UserInterface {
   email: string
   password: string
   role: string
+  tokenVersion: number
   createdAt: Date
   updatedAt: Date
 }
@@ -41,6 +42,9 @@ export class User implements UserInterface {
 
   @Column({ type: 'text', default: RoleType.USER })
   role: string
+
+  @Column('int', { default: 0 })
+  tokenVersion: number
 
   @Column('date')
   @CreateDateColumn()
