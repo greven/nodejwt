@@ -14,7 +14,7 @@
     "synchronize": true,
     "logging": false
   },
-  "keyv": {
-    "uri": "postgresql://db_user:db_password@localhost:5432/db_name"
+  "keystore": {
+    "uri": "redis://user:pass@localhost:6379"
   }
 }

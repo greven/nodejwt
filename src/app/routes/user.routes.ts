@@ -4,8 +4,8 @@ import { user } from '../controllers'
 
 const router = new Router()
 
-router.get('/', user.listAll)
-router.get('/:id', user.getOneById)
+router.get('/', user.findAll)
+router.get('/:id', user.findOne)
 router.post('/', user.createUser)
 router.delete('/:id', user.deleteUser)
 

@@ -6,7 +6,7 @@ import { OK, CREATED, NO_CONTENT, NOT_FOUND, BAD_REQUEST, CONFLICT } from 'http-
 import { User } from '../../models/User'
 
 export default class UserController {
-  static listAll = async (ctx: Koa.Context) => {
+  static findAll = async (ctx: Koa.Context) => {
     const userRepository = getRepository(User)
     const users = await userRepository.find({ select: ['id', 'email', 'password', 'role'] })
 
@@ -14,7 +14,7 @@ export default class UserController {
     ctx.status = OK
   }
 
-  static getOneById = async (ctx: Koa.Context) => {
+  static findOne = async (ctx: Koa.Context) => {
     const id = ctx.params.id
     const userRepository = getRepository(User)
 

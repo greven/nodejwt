@@ -9,8 +9,5 @@
     "database": "./data/dev.sqlite",
     "synchronize": true,
     "logging": false
-  },
-  "keyv": {
-    "uri": "sqlite://data/dev.sqlite"
   }
 }

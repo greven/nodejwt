@@ -7,11 +7,11 @@
     "jwt": {
       "token": {
         "secret": "1!@3$D8zLO-T_OsQ3_Aabb12Y4Fni-3f5!_1pW_d-jffJXc!+qQsiBQ6LuQ$Md_*n!_$24_gRwr+!",
-        "life": "5m"
+        "life": "10m"
       },
       "refreshToken": {
         "secret": "!35KLl!_xJUeSER+xo724F1-P_DfknAuu56_6%$tF0VS^$€PE+&3T2+9ii%L22Oo78J7mOVMkf!o",
-        "life": "25d"
+        "life": "10d"
       }
     }
   },
@@ -30,7 +30,7 @@
     "synchronize": true,
     "logging": false
   },
-  "keyv": {
-    "uri": "sqlite://data/dev.sqlite"
+  "keystore": {
+    "uri": "redis://localhost:6379"
   }
 }
